@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <title>Cat In Heat Detector Thesis 2023</title>
+    <link rel="stylesheet" href="/static/no.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-----JavaScript for Toggle menu------->
+
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <!-- logo  -->
+            <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='image/Logo.png') }}" alt="Logo"></a>
+        </div>
+        <nav class="desktop-nav">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('about_us') }}">About us</a>
+            <a href="{{ url_for('helps') }}">Help</a>
+            <a href="{{ url_for('acknowledgement') }}">Acknowledgement</a>
+        </nav>
+        <div class="mobile-nav-icon" onclick="toggleMobileNav()">
+            <!-- Mobile navigation icon hamburger icon -->
+            ☰
+        </div>
+    </header>
+    <div class="overlay-nav">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleMobileNav()">
+            &times; <!-- close symbol -->
+        </a>
+        <div class="menu">
+            <!-- mobile navigation items  -->
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('about_us') }}">About us</a>
+            <a href="{{ url_for('helps') }}">Help</a>
+            <a href="{{ url_for('acknowledgement') }}">Acknowledgement</a>
+        </div>
+    </div>
+    
+    
+    
+    <main>
+        <div>
+            <div class="gifs">
+
+                <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+                <dotlottie-player src="https://lottie.host/18d6302f-ba03-4c7d-b7a2-dd897f5016fa/GfnET5odEW.json" background="transparent" speed="1" style="width: 590x; height: 590px; " loop autoplay></dotlottie-player>
+                
+                <!-- 
+
+                <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+                <dotlottie-player src="https://lottie.host/9df15d76-63ac-4a93-804a-fe041a59b929/gUX2OEBkvK.json" background="transparent" speed="1" style="width: 590px; height: 590px; margin-top: 6%;" loop autoplay></dotlottie-player>
+            </div>
+           
+            -->
+            <div class="holder-desc">
+                <h1>Seems like...</h1>
+                <p>Your cat is exhibiting these behaviors because of the medication, indicating that she is not ready to mate..</p>
+            <div class="button">
+                <a class="buttons" href="{{ url_for('index') }}" class="return-home">RETURN HOME</a>
+            </div>
+        </div>
+        </div>
+</main>
+<script src="{{ url_for('static', filename='menu.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat In Heat Detector Thesis 2023</title>
+    <link rel="stylesheet" href="/static/uploads.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Caveat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- OpenCV Library -->
+    <script async src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <!-- logo -->
+            <img src="{{ url_for('static', filename='image/Logo.png') }}" alt="Logo">
+        </div>
+        <nav class="desktop-nav">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('about_us') }}">About us</a>
+            <a href="{{ url_for('helps') }}">Help</a>
+            <a href="{{ url_for('acknowledgement') }}">Acknowledgement</a>
+        </nav>
+        <div class="mobile-nav-icon" onclick="toggleMobileNav()">
+            <!-- Mobile navigation icon hamburger icon -->
+            ☰
+        </div>
+    </header>
+    <div class="overlay-nav">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleMobileNav()">
+            &times; <!-- close symbol -->
+        </a>
+        <div class="menu">
+            <!-- mobile navigation items -->
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('about_us') }}">About us</a>
+            <a href="{{ url_for('helps') }}">Help</a>
+            <a href="{{ url_for('acknowledgement') }}">Acknowledgement</a>
+        </div>
+    </div>
+
+    <main>
+        <div class="text-box">
+            <h1>Female Cat In-Heat (Estrus Stage) Detector</h1>
+            <p>Let's see if your cat is in-heat!</p><br><br>
+
+            <!-- Modified input element to accept video files -->
+            <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+                <label for="videoFile" class="drop-container" id="dropcontainer"><br><br>
+                    <span class="drop-title">Drop video files here or click to browse</span><br><br><br>
+                    <input type="file" id="videoFile" name="video" accept="video/*" required>
+                    <p id="selectedVideo" style="color: black;"></p><br>
+                    <button type="submit" class="analyze-button" onclick="startAnalysis()">Analyze</button>
+                </label>
+
+                <!-- "Video is being analyzed..." message -->
+                <div id="analysis-message" style="display: none;">
+                    <div class="container_progress">
+                        <p> Analyzing Video...</p>
+                        <div class="bar">
+                            <div class="fill"></div>
+                        </div>
+                        <div class="counter">0%</div>
+                    </div>
+                </div>
+
+                <!-- Real-time detection video display -->
+                <div class="real-time-video-container" id="realTimeVideoContainer" style="display: none;"></div>
+            </form>
+
+            <!-- JavaScript for Toggle menu and Progress Bar -->
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function () {
+                    let container_progress = document.querySelector(".container_progress");
+                    let fill = document.querySelector(".fill");
+                    let run;
+
+                    // Declare cap and model variables
+                    let cap, model;
+
+                    document.querySelector('.analyze-button').addEventListener('click', () => {
+                        // Check if a file is selected
+                        let fileInput = document.querySelector('input[name="video"]');
+                        if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+                            // Render 'Cerror.html' if no file is selected
+                            window.location.href = '{{ url_for("render_cerror") }}';
+                            return;
+                        }
+
+                        // Clear previous intervals
+                        clearInterval(run);
+
+                        // Start a new interval to fetch the progress from the server
+                        run = setInterval(() => {
+                            // Make an AJAX request to get the progress from the server
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('GET', '{{ url_for("get_analysis_progress") }}', true);
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState == 4 && xhr.status == 200) {
+                                    var progress = JSON.parse(xhr.responseText).progress;
+                                    if (isNaN(progress) || progress >= 100) {
+                                        // Analysis completed or progress is not a number
+                                        clearInterval(run);
+                                        container_progress.style.display = "block";
+                                        document.getElementById('dropcontainer').style.display = 'none'; // Hide drop-container
+                                        showRealTimeDetection(fileInput.files[0]);
+                                    } else {
+                                        // Update the progress bar
+                                        fill.style.width = progress + "%";
+                                        document.querySelector(".counter").textContent = progress + "%";
+                                    }
+                                }
+                            };
+                            xhr.send();
+                        }, 50);
+                    });
+
+                    function showRealTimeDetection(videoFile) {
+                        // Show the real-time detection video container
+                        document.getElementById('realTimeVideoContainer').style.display = 'block';
+
+                        let videoElement = document.createElement('video');
+                        videoElement.src = URL.createObjectURL(videoFile);
+                        videoElement.controls = true;
+                        videoElement.autoplay = true;
+                        videoElement.width = 400; // Adjusted width
+                        videoElement.height = 400; // Adjusted height
+
+                        // Append the video element to the text box
+                        document.getElementById('realTimeVideoContainer').appendChild(videoElement);
+
+                        // Initialize cap and model
+                        cap = new cv.VideoCapture(videoElement);
+                        model = new cv.Mat(videoElement.height, videoElement.width, cv.CV_8UC4);
+
+                        // Loop through the video frames
+                        function processFrame() {
+                            cap.read(model);
+
+                            // Run YOLOv8 inference on the frame for cat detection
+                            let results_cat = yolov8_model_cat.predict(model);
+
+                            // Run YOLOv8 inference on the frame for in-heat detection
+                            let results_in_heat = yolov8_model_in_heat.predict(model);
+
+                            // Visualize the results on the frame for cat detection
+                            let annotatedFrameCat = results_cat[0].plot();
+
+                            // Visualize the results on the frame for in-heat detection
+                            let annotatedFrameInHeat = results_in_heat[0].plot();
+
+                            // Display the annotated frames
+                            cv.imshow("Cat Detection", annotatedFrameCat);
+                            cv.imshow("In-Heat Detection", annotatedFrameInHeat);
+
+                            // Continue processing frames if 'q' is not pressed
+                            if (cv.waitKey(1) !== 113) {
+                                requestAnimationFrame(processFrame);
+                            } else {
+                                // Release resources
+                                cap.delete();
+                                model.delete();
+                                cv.destroyAllWindows();
+                            }
+                        }
+
+                        // Start processing frames
+                        requestAnimationFrame(processFrame);
+                    }
+
+                    let intervalId;
+
+                    document.querySelector('.analyze-button').addEventListener('click', () => {
+                        // Clear the previous interval if exists
+                        clearInterval(intervalId);
+
+                        // Start a new interval to fetch frames from the server
+                        intervalId = setInterval(updateFrame, 100);  // Adjust the interval as needed
+                    });
+
+                    function updateFrame() {
+                    // Make an AJAX request to get the frame from the server
+                    $.ajax({
+                        url: '{{ url_for("get_frame") }}',
+                        method: 'GET',
+                        success: function (data) {
+                            if (data.error) {
+                                console.error('Error retrieving frame data:', data.error);
+                            } else {
+                                // Update the image in your HTML
+                                document.getElementById('realTimeVideoContainer').innerHTML = '<img src="data:image/jpeg;base64,' + data.frame + '" />';
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error retrieving frame:', error);
+                            }
+                        });
+                    }
+
+                });
+            </script>
+
+            <!-- Add this script to your HTML -->
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    let intervalId;
+
+                    document.querySelector('.analyze-button').addEventListener('click', () => {
+                        // Clear the previous interval if exists
+                        clearInterval(intervalId);
+
+                        // Start a new interval to fetch frames from the server
+                        intervalId = setInterval(updateFrame, 100);  // Adjust the interval as needed
+                    });
+
+                    function updateFrame() {
+                        // Make an AJAX request to get the frame from the server
+                        $.ajax({
+                            url: '{{ url_for("get_frame") }}',
+                            method: 'GET',
+                            success: function (data) {
+                                // Update the image in your HTML
+                                document.getElementById('realTimeVideoContainer').innerHTML = '<img src="' + data + '" />';
+                            }
+                        });
+                    }
+
+                });
+            </script>
+            <script src="{{ url_for('static', filename='menu.js') }}"></script>
+        </div>
+    </main>
+</body>
+
+</html>

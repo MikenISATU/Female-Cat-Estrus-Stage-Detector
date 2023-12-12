@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <title>Cat In Heat Detector Thesis 2023</title>
+    <link rel="stylesheet" href="/static/uploads.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-----JavaScript for Toggle menu------->
+
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <!-- logo  -->
+            <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='image/Logo.png') }}" alt="Logo"></a>
+        </div>
+        <nav class="desktop-nav">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('about_us') }}">About us</a>
+            <a href="{{ url_for('helps') }}">Help</a>
+            <a href="{{ url_for('acknowledgement') }}">Acknowledgement</a>
+        </nav>
+        <div class="mobile-nav-icon" onclick="toggleMobileNav()">
+            <!-- Mobile navigation icon hamburger icon -->
+            ☰
+        </div>
+    </header>
+    <div class="overlay-nav">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleMobileNav()">
+            &times; <!-- close symbol -->
+        </a>
+        <div class="menu">
+            <!-- mobile navigation items  -->
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('about_us') }}">About us</a>
+            <a href="{{ url_for('helps') }}">Help</a>
+            <a href="{{ url_for('acknowledgement') }}">Acknowledgement</a>
+        </div>
+    </div>
+
+
+<!-- ... (Main contents) ... -->
+
+    <main>
+
+        <div class="text-box">
+            <h1>Let's see if your cat is in-heat!</h1><br>
+            <div id="printedMessagesContainer"></div>
+
+            <!-- Modified input element to accept video files -->
+            <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+                <label for="videoFile" class="drop-container" id="dropcontainer"><br><br>
+                    <span class="drop-title">Drop video files here or click to browse</span><br><br><br>
+                    <input type="file" id="videoFile" name="video" accept="video/*" required>
+                    <p id="selectedVideo" style="color: black;"></p><br>
+                    <button type="submit" class="analyze-button" onclick="startAnalysis()">Analyze</button>
+                </label>
+
+                <!-- "Video is being analyzed..." message -->
+                <div id="analysis-message" style="display: none;">
+                    <div class="container_progress"> <p> Analyzing Video...</p>
+                        <div class="bar">
+                            <div class="fill"></div>
+                        </div>
+                        <div class="counter">0%</div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- JavaScript for Toggle menu and Progress Bar -->
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function () {
+                    let container_progress = document.querySelector(".container_progress");
+                    let fill = document.querySelector(".fill");
+                    let click = document.querySelector(".analyze-button");
+
+                    click.addEventListener('click', () => {
+                        // Check if a file is selected
+                        let fileInput = document.querySelector('input[name="video"]');
+                        if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+                            // Render 'Cerror.html' if no file is selected
+                            window.location.href = '{{ url_for("render_cerror") }}';
+                            return;
+                        }
+
+                        // Clear previous intervals
+                        clearInterval(run);
+
+                        // Start a new interval to fetch the progress from the server
+                        var run = setInterval(() => {
+                            // Make an AJAX request to get the progress from the server
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('GET', '{{ url_for("get_analysis_progress") }}', true);
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState == 4 && xhr.status == 200) {
+                                    var progress = JSON.parse(xhr.responseText).progress;
+                                    if (isNaN(progress) || progress >= 100) {
+                                        // Analysis completed or progress is not a number
+                                        clearInterval(run);
+                                        container_progress.style.display = "block";
+                                        document.getElementById('dropcontainer').style.display = 'none'; // Hide drop-container
+                                    } else {
+                                        // Update the progress bar
+                                        fill.style.width = progress + "%";
+                                        document.querySelector(".counter").textContent = progress + "%";
+                                    }
+                                }
+                            };
+                            xhr.send();
+                        }, 50);
+                    });
+                });
+            </script>
+
+
+
+            <!-- JavaScript function to update the selected video filename -->
+            <script>
+                document.getElementById('videoFile').addEventListener('change', function() {
+                    const selectedFile = this.files[0];
+                    const selectedVideoText = document.getElementById('selectedVideo');
+
+                    if (selectedFile) {
+                        selectedVideoText.textContent = `Selected Video: ${selectedFile.name}`;
+                    } else {
+                        selectedVideoText.textContent = '';
+                    }
+                });
+
+                function startAnalysis() {
+                    // Hide the file input and submit button
+                    document.querySelector('input[name="video"]').style.display = 'none';
+                    document.querySelector('button[type="submit"]').style.display = 'none';
+                    document.getElementById('dropcontainer').style.display = 'none'; // Hide drop-container on click
+
+
+                    // Show the "Video is being analyzed..." message
+                    document.getElementById('analysis-message').style.display = 'block';
+                }
+            </script>
+
+           <script>
+                // JavaScript code to fetch and update the printed messages
+                function fetchPrintedMessages() {
+                    console.log("Fetching printed messages...");
+                    fetch('/get_printed_messages')
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("Fetched printed messages:", data.printed_messages);
+
+                            const printedMessagesContainer = document.getElementById('printedMessagesContainer');
+                            console.log("Container:", printedMessagesContainer);  // Log the container
+
+                            printedMessagesContainer.innerHTML = data.printed_messages;
+                        })
+                        .catch(error => {
+                            console.error("Error fetching printed messages:", error);
+                        });
+                }
+
+                // Fetch the printed messages when the page loads
+                document.addEventListener('DOMContentLoaded', () => {
+                    console.log("Page loaded. Fetching printed messages...");
+                    fetchPrintedMessages();
+                });
+            </script>
+
+
+            <script src="{{ url_for('static', filename='menu.js') }}"></script>
+            <script src="{{ url_for('static', filename='upload.js') }}"></script>
+        </div>
+    </main>
+</body>
+</html>
+

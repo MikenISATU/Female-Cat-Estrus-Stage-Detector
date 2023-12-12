@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/abouts.css">
+    <title>Your Website</title>
+</head>
+<body>
+    <header>
+            <div class="logo">
+                <!-- logo  -->
+                <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='image/Logo.png') }}" alt="Logo"></a>
+            </div>
+            <nav class="desktop-nav">
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('about_us') }}">About us</a>
+                <a href="{{ url_for('helps') }}">Help</a>
+                <a href="{{ url_for('acknowledgement') }}">Acknowledgement</a>
+            </nav>
+            <div class="mobile-nav-icon" onclick="toggleMobileNav()">
+                <!-- Mobile navigation icon hamburger icon -->
+                ☰
+            </div>
+        </header>
+        <div class="overlay-nav">
+            <a href="javascript:void(0)" class="close-btn" onclick="toggleMobileNav()">
+                &times; <!-- close symbol -->
+            </a>
+            <div class="menu">
+            <!-- mobile navigation items  -->
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('about_us') }}">About us</a>
+            <a href="{{ url_for('helps') }}">Help</a>
+            <a href="{{ url_for('acknowledgement') }}">Acknowledgement</a>
+        </div>
+        </div>
+
+
+<!-- ... (Main contents) ... -->
+
+    <main>
+
+<div class="about-section">
+    <p>Welcome to Our Feline In-heat Innovation's Website! We're a team of five BSCS students passionate about feline welfare, bringing you a cutting-edge Female Cat In-Heat Detector that combines coding with care for confident pet ownership, informed breeding, and targeted veterinary care. Join us in redefining cat care with innovation and compassion!</p>
+  </div>
+
+
+  <h2>Our Team</h2>
+
+
+  <div class="row">
+
+    <div class="column">
+      <div class="card">
+          <img src="{{ url_for('static', filename='image/Mam.png') }}" class="pictures">
+        <div class="footer">
+            <div class="connections">
+                <a href="mailto:https://www.LennyAmar@gmail.com">
+                <div class="connection gmail"><div class="icon"></div></div>
+                </a>
+                <a href="https://www.instagram.com" target="_blank">
+                <div class="connection instagram"><div class="icon"></div></div>
+                </a>
+            </div>
+            <div class="info">
+                <div class="name">LENNY MORANO AMAR</div>
+                <div class="job"> Thesis Adviser </div>
+            </div>
+        </div>
+        <div class="card-blur"></div>
+      </div>
+    </div>
+
+
+    <div class="column">
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/Miles1.png') }}" class="pictures">
+          <div class="footer">
+              <div class="connections">
+                <a href="https://www.mileskenneth.napilan@students@isatu.edu.ph">
+                    <div class="connection gmail"><div class="icon"></div></div>
+                    </a>
+                    <a href="https://www.instagram.com/ig_miken" target="_blank">
+                    <div class="connection instagram"><div class="icon"></div></div>
+                    </a>
+              </div>
+              <div class="info">
+                  <div class="name">MILES KENNETH NAPILAN</div>
+                  <div class="job"> Project Leader </div>
+              </div>
+          </div>
+          <div class="card-blur"></div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/stella1.png') }}" class="pictures">
+          <div class="footer">
+              <div class="connections">
+                <a href="mailto:https://www.stellamaris.nanta@students@isatu.edu.ph">
+                    <div class="connection gmail"><div class="icon"></div></div>
+                    </a>
+                    <a href="https://www.instagram.com/esteellay" target="_blank">
+                    <div class="connection instagram"><div class="icon"></div></div>
+                    </a>
+              </div>
+              <div class="info">
+                  <div class="name">STELLA MARIS NANTA</div>
+                  <div class="job"> Website Designer </div>
+              </div>
+          </div>
+          <div class="card-blur"></div>
+        </div>
+      </div>
+
+
+      <div class="column">
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/whero1.png') }}" class="pictures">
+          <div class="footer">
+              <div class="connections">
+                <a href="mailto:https://www.ma.wheronamie.cubin@students@isatu.edu.ph">
+                    <div class="connection gmail"><div class="icon"></div></div>
+                    </a>
+                    <a href="https://www.instagram.com/whe.r0" target="_blank">
+                    <div class="connection instagram"><div class="icon"></div></div>
+                    </a>
+              </div>
+              <div class="info">
+                  <div class="name">Ma. Wheronamie Cubin</div>
+                  <div class="job"> Researcher/Editor </div>
+              </div>
+          </div>
+          <div class="card-blur"></div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/mariegen1.png') }}" class="pictures">
+          <div class="footer">
+              <div class="connections">
+                <a href="mailto:https://www.mariegen.jolo@students@isatu.edu.ph">
+                    <div class="connection gmail"><div class="icon"></div></div>
+                    </a>
+                    <a href="https://www.instagram.com/wiz_95_" target="_blank">
+                    <div class="connection instagram"><div class="icon"></div></div>
+                    </a>
+              </div>
+              <div class="info">
+                  <div class="name">Mariegen Jolo</div>
+                  <div class="job"> Programmer </div>
+              </div>
+          </div>
+          <div class="card-blur"></div>
+        </div>
+      </div>
+
+
+      <div class="column">
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/clyde.png') }}" class="pictures">
+          <div class="footer">
+              <div class="connections">
+                <a href="mailto:https://www.clydevincent.espiritu@students.isatu.edu.ph">
+                    <div class="connection gmail"><div class="icon"></div></div>
+                    </a>
+                    <a href="https://www.instagram.com/Cespi" target="_blank">
+                    <div class="connection instagram"><div class="icon"></div></div>
+                    </a>
+              </div>
+              <div class="info">
+                  <div class="name">Clyde Vincent Espiritu</div>
+                  <div class="job"> Researcher/Editor </div>
+              </div>
+          </div>
+          <div class="card-blur"></div>
+        </div>
+      </div>
+
+    </main>
+
+
+     <script src="{{ url_for('static', filename='menu.js') }}"></script>
+</body>
+</html>

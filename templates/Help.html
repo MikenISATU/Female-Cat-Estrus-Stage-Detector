@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <title>Cat In Heat Detector Thesis 2023</title>
+    <link rel="stylesheet" href="/static/help.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abel&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <!-- logo  -->
+            <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='image/Logo.png') }}" alt="Logo"></a>
+        </div>
+        <nav class="desktop-nav">
+            <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('about_us') }}">About us</a>
+                <a href="{{ url_for('helps') }}">Help</a>
+                <a href="{{ url_for('acknowledgement') }}">Acknowledgement</a>
+        </nav>
+        <div class="mobile-nav-icon" onclick="toggleMobileNav()">
+            <!-- Mobile navigation icon hamburger icon -->
+            ☰
+        </div>
+    </header>
+    <div class="overlay-nav">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleMobileNav()">
+            &times; <!-- close symbol -->
+        </a>
+        <div class="menu">
+        <!-- mobile navigation items  -->
+            <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('about_us') }}">About us</a>
+                <a href="{{ url_for('helps') }}">Help</a>
+                <a href="{{ url_for('acknowledgement') }}">Acknowledgement</a>
+    </div>
+    </div>
+
+
+<!-- ... (Main contents) ... -->
+
+
+    <main>
+       
+
+
+<div class="container">
+    <h2> Need some Help? </h2>
+            <h1>Step 01</h1>
+            <h3> Open the Web Browser and Enter the Website's URL</h3>
+            <img src="{{ url_for('static', filename='image/step1.jpg') }}" alt="pictures">
+        <p>Go to this link as shown above. </p> 
+        <br>
+        <br>
+    </div>      
+
+<div class="container">
+    <h1>Step 02</h1>
+    <h3> Welcome to our Website</h3>
+            <img src="{{ url_for('static', filename='image/step2.jpg') }}" alt="pictures">
+         <p>This is the Homepage of the website. And on the upper right side is the navigation bar which contains home, about us, help, and acknowledgement buttons.</p>
+         <br>
+         <br>
+    </div>
+     
+   
+<div class="container">
+    <h1>Step 03</h1>
+    <h3>Uploading Video</h3>
+    <img src="{{ url_for('static', filename='image/step3.jpg') }}" alt="pictures">
+     <p>Upon entering the website, the first thing you’ll see is the “Upload Your Video Here!” button. This button will direct you to the upload or drop files section where you can drop or select files from your device gallery or files. </p> 
+       <br>
+    <br>
+    </div>      
+
+
+<div class="container">
+    <h1>Step 04</h1>
+    <h3> Choose a file/video to upload</h3>
+    <img src="{{ url_for('static', filename='image/step4.jpg') }}" alt="pictures">
+    <p>From your files you may select a video, specifically videos of your cat that you desire to upload. Note that you can only select one video at a time for the process of in-heat detection. At the lower right of the window you’ll find “open” button, click to proceed to the upload.</p> 
+     <br>
+    <br>
+    </div>      
+
+<div class="container">
+     <h1>Step 05</h1>
+     <h3> Video analysis and Validation</h3>
+     <img src="{{ url_for('static', filename='image/step5.jpg') }}" alt="pictures">
+    <p>The website will then start analyzing the video being uploaded. </p> 
+    </div>      
+
+<div class="container">
+    <h1>Step 06</h1>
+    <h3> Users' Feedback</h3>
+    <img src="{{ url_for('static', filename='image/step6.jpg') }}" alt="pictures">
+    <img src="{{ url_for('static', filename='image/step6.1.jpg') }}" alt="pictures">
+     <p>1. The screen will pop up a small window asking a question, indicating that your female cat possibly took medication causing this behavior.</p><br>
+    <p>1.1 The screen will pop up a small window giving an instruction to take your cat’s rectal part for temperature checking using a thermometer. Follow the instructions and select an answer among buttons either “yes” or “no”. The analysis result and your validation response will lead you to the answer either your cat is in-heat or not.</p>
+    </div> 
+
+
+<div class="container">
+    <h1>Step 07</h1>
+    <h3> Results</h3>
+    <img src="{{ url_for('static', filename='image/step7.1.jpg') }}" alt="pictures">
+    <img src="{{ url_for('static', filename='image/step7.jpg') }}" alt="pictures">
+    <p>Result window may display a positive/negative answer which state that “Your cat is ready to mate” and a negative answer “Your cat is not ready to mate”.</p>
+     <br>
+         <br>
+    </div>      
+
+
+<div class="container">
+    <h1>Step 08</h1>
+    <h3> Errors </h3>
+    <img src="{{ url_for('static', filename='image/ERROR.jpg') }}" alt="cat pictures">
+    <img src="{{ url_for('static', filename='image/ERROR2.jpg') }}" alt="cat pictures">
+    <img src="{{ url_for('static', filename='image/nocatf.jpg') }}" alt="pictures">
+    <p>On the screen also may display an error if you uploaded a wrong file, or empty file and video does not show any presence of the subject or specifically a female cat.  </p>
+     <br>
+         <br>
+    </div>      
+
+<div class="container">
+    <h1>Step 09</h1>
+    <h3> About the page</h3>
+    <img src="{{ url_for('static', filename='image/about.jpg') }}" alt="pictures">
+    <p>Within the website, you may also find additional buttons such as about us, help, and acknowledgement page which you can explore to learn more about us.</p> 
+     <br>
+         <br>
+    </div>      
+</main>
+<script src="{{ url_for('static', filename='menu.js') }}"></script>
+</body>
+
+</html>

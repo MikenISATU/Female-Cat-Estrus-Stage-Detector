@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat In Heat Detector Thesis 2023</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section class="header">
+        <nav>
+            <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='image/Logo.png') }}"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-window-close" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('about_us') }}">About us</a></li>
+                    <li><a href="{{ url_for('helps') }}">Help</a></li>
+                    <li><a href="{{ url_for('acknowledgement') }}">Acknowledgement</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+
+        <div class="text-box">
+            <h1>Female Cat In-Heat (Estrus Stage) Detector</h1>
+
+            <!-- Modified input element to accept video files -->
+            <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+                <label for="videoFile" class="drop-container" id="dropcontainer">
+                    <span class="drop-title">Drop video files here or click to browse</span>
+                    <input type="file" id="videoFile" name="video" accept="video/*" required>
+                    <p id="selectedVideo" style="color: black;"></p>
+                    <button type="submit" class="analyze-button" onclick="startAnalysis()">Analyze</button>
+                </label>
+
+                <!-- "Video is being analyzed..." message -->
+                <div id="analysis-message" style="display: none;">
+                    <p>Analyzing Video...</p>
+                </div>
+            </form>
+
+            <!-- JavaScript function to update the selected video filename -->
+            <script>
+                document.getElementById('videoFile').addEventListener('change', function() {
+                    const selectedFile = this.files[0];
+                    const selectedVideoText = document.getElementById('selectedVideo');
+
+                    if (selectedFile) {
+                        selectedVideoText.textContent = `Selected Video: ${selectedFile.name}`;
+                    } else {
+                        selectedVideoText.textContent = '';
+                    }
+                });
+
+                function startAnalysis() {
+                    // Hide the file input and submit button
+                    document.querySelector('input[name="video"]').style.display = 'none';
+                    document.querySelector('button[type="submit"]').style.display = 'none';
+
+                    // Show the "Video is being analyzed..." message
+                    document.getElementById('analysis-message').style.display = 'block';
+                }
+            </script>
+        </div>
+    </section>
+</body>
+</html>

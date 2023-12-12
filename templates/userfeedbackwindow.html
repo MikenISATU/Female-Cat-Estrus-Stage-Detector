@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <title>Cat In Heat Detector Thesis 2023</title>
+    <link rel="stylesheet" href="/static/userfeedback.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-----JavaScript for Toggle menu------->
+
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <!-- logo  -->
+            <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='image/Logo.png') }}" alt="Logo"></a>
+        </div>
+        <nav class="desktop-nav">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('about_us') }}">About us</a>
+            <a href="{{ url_for('helps') }}">Help</a>
+            <a href="{{ url_for('acknowledgement') }}">Acknowledgement</a>
+        </nav>
+        <div class="mobile-nav-icon" onclick="toggleMobileNav()">
+            <!-- Mobile navigation icon hamburger icon -->
+            ☰
+        </div>
+    </header>
+    <div class="overlay-nav">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleMobileNav()">
+            &times; <!-- close symbol -->
+        </a>
+        <div class="menu">
+            <!-- mobile navigation items  -->
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('about_us') }}">About us</a>
+            <a href="{{ url_for('helps') }}">Help</a>
+            <a href="{{ url_for('acknowledgement') }}">Acknowledgement</a>
+        </div>
+    </div>
+    
+    
+    <div class="body">
+        <div class="feedback-window">
+        <h1>DO FOLLOW THE FOLLOWING INSTRUCTIONS:</h1><br>
+        <i><p>1. Do please use a thermometer and place it to your cat's rectal part.</p></i>
+        <i><p>2. If the body temperature of the cat is above 39 degrees celsius.</p></i><br>
+        <b><p>Click "YES" if not "NO".</p></b>
+
+        <!-- "Yes" and "No" hyperlinks with unique classes -->
+        <a class="feedback-link yes-link" href="{{ url_for('yes') }}">YES</a>
+        <a class="feedback-link no-link" href="{{ url_for('no') }}">NO</a>
+    </div></div>
+        </nav>
+    </section>
+</body>
+
+</html>

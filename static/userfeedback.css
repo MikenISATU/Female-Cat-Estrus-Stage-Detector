@@ -1,0 +1,230 @@
+body {
+    margin: 0;
+	font-family: 'Abel', sans-serif;
+}
+
+
+header {
+    background-color: #edc9af;
+    padding: 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.desktop-nav {
+  display: inline;
+
+
+}
+
+.desktop-nav a {
+    font-size: 20px;
+    color: black;
+    text-decoration: none;
+    padding: 20px;
+}
+
+.desktop-nav a:hover {
+ color: brown;
+}
+
+
+/* mobile */
+.overlay-nav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color:#edc9af;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index: 2; /* Place the mobile navigation above other content */
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 30px;
+    color: white;
+    text-decoration: none;
+}
+
+.overlay-nav a {
+    padding: 15px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.menu{
+    margin-top: 10%;
+    text-align: center;
+    }
+
+.overlay-nav a:hover {
+    color:brown;
+}
+
+.mobile-nav-icon {
+    display: none; /* hide on desktop */
+    cursor: pointer;
+    font-size: 24px;
+}
+
+@media only screen and (max-width: 600px) {
+    .desktop-nav {
+        display: none; /* hide on mobile */
+    }
+
+    .mobile-nav-icon {
+        display: block; /* show on mobile */
+    }
+
+    body {
+        overflow-x: hidden; /* prevent double scrollbars */
+    }
+
+    .overlay-nav {
+        padding-top: 15px;
+    }
+
+    .overlay-nav a {
+        font-size: 18px;
+    }
+}
+
+body.mobile-nav-active .desktop-nav {
+    display: none;
+}
+
+body.mobile-nav-active {
+    overflow-x: hidden;
+}
+
+
+.gifs {
+    display: grid;
+    width: 100%;
+}
+
+.gif{
+    padding-left: 30%;
+}
+
+@media screen and (min-width: 996px){
+    .gifs {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+    }
+}
+  .holder-desc {
+    align-items: center;
+    text-align: left;
+    width: 30%;
+    float: right;
+
+  }
+
+  .button{
+    width: 100px;
+    background-color: bisque;
+    height: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+ 
+  }
+
+  .buttons{   text-decoration: none;
+    font-weight: bold;
+    color:black}
+
+p{
+    font-size: 30px;}
+
+h1{
+    font-size: 50px;
+}
+
+main{
+    align-items: center;
+}
+
+
+.feedback-window {
+    background-color: #fff;
+    width: 90%; /* 75% width of the viewport */
+    max-width: 600px; /* Maximum width to maintain 3:4 aspect ratio */
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    align-items: center;
+
+}
+
+.body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+p {
+    font-size: 24px;
+}
+
+.feedback-link {
+    display: block;
+    margin: 10px 0; /* Reduced margin */
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid transparent; /* Reduced border size */
+    padding: 5px 10px; /* Reduced padding */
+    border-radius: 1px; /* Border radius added */
+    transition: color 0.3s, background-color 0.3s, border-color 0.3s; /* Smooth transitions on hover */
+}
+
+.yes-link, .no-link {
+    font-size: 30px; /* Adjust the font size to make it bigger */
+    border-radius: 5px; /* Adjust the border radius to make it smaller */
+    display: inline-block; /* Make the links inline-block elements */
+    padding: 10px 20px; /* Increase the padding to make the size of the hover effect bigger */
+    border: 2px solid transparent; /* Add a border to create the box effect */
+    transition: border-color 0.3s, background-color 0.3s, color 0.3s; /* Smooth transitions on hover */
+}
+
+.yes-link {
+    color: #0074d9;
+}
+
+.yes-link:hover {
+    color: #ffffff;
+    background-color: #0074d9; /* Blue background on hover */
+    border-color: #0074d9; /* Blue border on hover */
+}
+
+.no-link {
+    color: #ff0000;
+}
+
+.no-link:hover {
+    color: #ffffff;
+    background-color: #ff0000; /* Red background on hover */
+    border-color: #ff0000; /* Red border on hover */
+}

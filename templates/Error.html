@@ -1,0 +1,24 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <title>Cat In Heat Detector Thesis 2023</title>
+    <link rel="stylesheet" href="/static/Cerror.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abel&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section class="header">
+        <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='image/Logo.png') }}" alt="Logo" class="Logo"></a>
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='image/e11.png') }}" alt="Cat" class="bordered-image">
+             <div class="button">
+               <a href="{{ url_for('index') }}" class="return-home">RETURN HOME</a>
+             </div>
+        </div>
+
+    </section>
+
+</body>
+</html>
